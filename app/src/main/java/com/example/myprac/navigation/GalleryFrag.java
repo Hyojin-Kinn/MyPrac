@@ -1,24 +1,61 @@
 package com.example.myprac.navigation;
 
+import android.content.ClipData;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myprac.GalleryAdapter;
 import com.example.myprac.R;
+
+import java.util.ArrayList;
 
 public class GalleryFrag extends Fragment {
 
     private View view;
 
+    //추가1
+    private RecyclerView recyclerView;
+    private GridLayoutManager gridLayoutManager;
+    //추가1
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.galleryfrag, container, false);
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.account_recyclerview);
+        gridLayoutManager = new GridLayoutManager(view.getContext(),3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        Button account_btn_add = (Button)view.findViewById(R.id.account_btn_add);
+        account_btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                getActivity().startActivityForResult(intent, 2222);
+
+            }
+        });
 
         return view;
     }
