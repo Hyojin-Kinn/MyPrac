@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.myprac.databinding.ActivityMainBinding;
+import com.example.myprac.navigation.DiabetesFrag;
 import com.example.myprac.navigation.GalleryFrag;
 import com.example.myprac.navigation.HomeFrag;
 import com.example.myprac.navigation.SearchFrag;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private HomeFrag homeFrag;
     private GalleryFrag galleryFrag;
     private SearchFrag searchFrag;
+    private DiabetesFrag diabetesFrag;
 
     private GalleryAdapter galleryAdapter;
     private RecyclerView recyclerView;
@@ -64,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
                         setFrag(0);
                         break;
                     case R.id.action_search:
-                        setFrag(1);
+                        setFrag(0); //누를 시 어플 종료되어서 임시조치
                         break;
                     case R.id.action_manage:
-                        setFrag(0);
+                        setFrag(2);
                         break;
                     case R.id.action_gallery:
                         setFrag(3);
@@ -100,7 +102,11 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 break;
             case 1:
-                ft.replace(R.id.main_content, homeFrag);
+                ft.replace(R.id.main_content, searchFrag);
+                ft.commit();
+                break;
+            case 2:
+                ft.replace(R.id.main_content, diabetesFrag);
                 ft.commit();
                 break;
             case 3:
