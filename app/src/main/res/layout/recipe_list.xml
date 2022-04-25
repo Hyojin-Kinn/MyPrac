@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:id="@+id/recipe_background"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+            <TextView
+                android:id="@+id/recipe_Image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="이미지 추가"
+                android:gravity="center"
+                android:src="@drawable/ic_launcher_background"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="310dp"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+
+                    android:gravity="left"
+                    android:id="@+id/recipe_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="레시피 이름을 적어주세요"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/recipe_decription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="레시피 설명을 적어주세요"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="7">
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/recipe_recommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_baseline_thumb_up_24"/>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+
+                        android:id="@+id/recipe_recommend_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left"
+                        android:text="추천수"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/recipe_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_baseline_comment_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:gravity="left"
+                        android:id="@+id/recipe_comment_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="댓글 수"
+                        android:textSize="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/recipe_date"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_baseline_date_range_24"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="2"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:gravity="left"
+                        android:id="@+id/recipe_upload_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="2019-04-22"
+                        android:textSize="10dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

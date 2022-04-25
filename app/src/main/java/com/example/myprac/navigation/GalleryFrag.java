@@ -29,10 +29,8 @@ public class GalleryFrag extends Fragment {
 
     private View view;
 
-    //추가1
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
-    //추가1
 
     @Nullable
     @Override

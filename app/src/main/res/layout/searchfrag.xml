@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".navigation.SearchFrag"
+    android:orientation="vertical"
+    android:layout_weight="11">
+
+    <LinearLayout
+        android:id="@+id/search_region"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:hint="검색어를 입력하세요" />
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_search_24" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        ..
+        <TableLayout
+            android:id="@+id/invisible"
+
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:orientation="horizontal">
+
+            <TableRow android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/cake"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:src="@drawable/ic_baseline_cake_24" />
+
+                <ImageView
+                    android:id="@+id/snack"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:src="@drawable/ic_baseline_cake_24" />
+
+
+                <ImageView
+                    android:id="@+id/toast"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:src="@drawable/ic_baseline_cake_24" />
+
+                <ImageView
+                    android:id="@+id/baguette"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:src="@drawable/ic_baseline_cake_24" />
+
+
+            </TableRow>
+
+            <TableRow android:gravity="center">
+
+                <TextView
+                    android:id="@+id/cake_title"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="케이크"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/snack_title"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="쿠키/푸딩"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/toast_title"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="식빵"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/baguette_title"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="바게트"
+                    android:textSize="20dp" />
+
+
+            </TableRow>
+
+        </TableLayout>
+
+
+
+    </LinearLayout>
+    <!--
+        <LinearLayout
+            android:id="@+id/tag_List"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical">
+            여기다 임시로 해쉬태그 전체를 넣어놔서 스크롤로 이동시키게 만들려고 했고 나중에 페이지 추가해서 더보기로
+            해쉬태그 전체를 볼 수 있게 하면 어떨까 생각함.
+        </LinearLayout>
+        -->
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8">
+
+            <TextView
+                android:id="@+id/recipe_region_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="전체 레시피"
+                android:textSize="20dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/array_recent_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="최신순"
+                android:textSize="15dp"
+                android:gravity="right"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/array_recommend_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="추천순"
+                android:textSize="15dp"
+                android:gravity="right"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/array_comment_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="댓글순"
+                android:textSize="15dp"
+                android:gravity="right"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="7"
+        android:id="@+id/recipe_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipe"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="추가"/>
+    </LinearLayout>
+</LinearLayout>

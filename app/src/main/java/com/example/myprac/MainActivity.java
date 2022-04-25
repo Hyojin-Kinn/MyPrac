@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +21,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.myprac.databinding.ActivityMainBinding;
 import com.example.myprac.navigation.GalleryFrag;
 import com.example.myprac.navigation.HomeFrag;
+import com.example.myprac.navigation.SearchFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -30,10 +36,14 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private HomeFrag homeFrag;
     private GalleryFrag galleryFrag;
+    private SearchFrag searchFrag;
 
     private GalleryAdapter galleryAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
+
+    //search기능 추가
+    private ActivityMainBinding binding;
 
     private static final String TAG = "GalleryFrag";
     ArrayList<Uri> uriList = new ArrayList<>();
@@ -41,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater()); //search
+        setContentView(binding.getRoot());
 
         bottomNavigationView = findViewById(R.id.bottom_navi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -52,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         setFrag(0);
                         break;
                     case R.id.action_search:
-                        setFrag(0);
+                        setFrag(1);
                         break;
                     case R.id.action_manage:
                         setFrag(0);
@@ -70,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
         homeFrag = new HomeFrag();
         galleryFrag = new GalleryFrag();
         setFrag(0); //초기 화면 지정
+
+        /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.action_home, R.id.action_search,R.id.action_manage,R.id.action_gallery, R.id.action_more)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.main_content);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.bottomNavi, navController);*/
     }
 
     private void setFrag(int n) { //화면 교체가 일어나는 위치
@@ -77,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
         ft = fm.beginTransaction();
         switch(n) {
             case 0:
+                ft.replace(R.id.main_content, homeFrag);
+                ft.commit();
+                break;
+            case 1:
                 ft.replace(R.id.main_content, homeFrag);
                 ft.commit();
                 break;
