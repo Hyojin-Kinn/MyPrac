@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myprac.GalleryAdapter;
+import com.example.myprac.MainActivity;
 import com.example.myprac.R;
 
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class GalleryFrag extends Fragment {
 
     private View view;
 
-    private RecyclerView recyclerView;
-    private GridLayoutManager gridLayoutManager;
+    private static RecyclerView recyclerView;
+    private static GridLayoutManager gridLayoutManager;
 
     @Nullable
     @Override
@@ -42,19 +43,19 @@ public class GalleryFrag extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         Button account_btn_add = (Button)view.findViewById(R.id.account_btn_add);
-        account_btn_add.setOnClickListener(new View.OnClickListener() {
+        account_btn_add.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                getActivity().startActivityForResult(intent, 2222);
-
+            public void onClick(View v){
+                MainActivity activity = (MainActivity) getActivity();
+                activity.GalleryAdd();
             }
         });
 
         return view;
+    }
+
+    public static void setRecyclerView(GalleryAdapter galleryAdapter){
+        recyclerView.setAdapter(galleryAdapter);
+        recyclerView.setLayoutManager(gridLayoutManager);
     }
 }

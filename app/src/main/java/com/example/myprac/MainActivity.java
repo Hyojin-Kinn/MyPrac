@@ -17,6 +17,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -41,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private DiabetesFrag diabetesFrag;
 
     private GalleryAdapter galleryAdapter;
-    private RecyclerView recyclerView;
-    private GridLayoutManager gridLayoutManager;
 
     //search기능 추가
     private ActivityMainBinding binding;
@@ -117,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void GalleryAdd(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 2222);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 uriList.add(imageUri);
 
                 galleryAdapter = new GalleryAdapter(uriList,getApplicationContext());
-                recyclerView.setAdapter(galleryAdapter);
-                recyclerView.setLayoutManager(gridLayoutManager);
+                GalleryFrag.setRecyclerView(galleryAdapter);
             }
             else{
                 ClipData clipData = data.getClipData();
@@ -152,8 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     galleryAdapter = new GalleryAdapter(uriList,getApplicationContext());
-                    recyclerView.setAdapter(galleryAdapter);
-                    recyclerView.setLayoutManager(gridLayoutManager);
+                    GalleryFrag.setRecyclerView(galleryAdapter);
                 }
             }
         }

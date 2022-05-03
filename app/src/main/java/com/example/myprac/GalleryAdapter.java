@@ -49,10 +49,34 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         Glide.with(gContext)
                 .load(image_uri)
                 .into(holder.image);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //이미지를 클릭했을 때 수행
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                remove(holder.getAdapterPosition());
+                return true;
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return gData.size();
+    }
+
+    public void remove(int position){
+        try {
+            gData.remove(position);
+            notifyItemRemoved(position);
+        } catch (IndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+        }
     }
 }
