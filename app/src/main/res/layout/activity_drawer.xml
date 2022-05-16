@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="240dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="start"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#86FFEB3B"
-    android:id="@+id/drawer"
     android:orientation="vertical">
     <!-- LinearLayout은 보통 방향을 줘야함. orientation으로 지정하기 -->
 
-    <Button
-        android:id="@+id/btn_close"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="메뉴닫기"/>
+    <ImageView
+        android:id="@+id/navi_ac_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@mipmap/ic_launcher_round"/>
     <!-- 보통 메뉴닫기 버튼은 drawer화면 오른쪽 위에 작게 [x]버튼 등으로 구현 -->
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="20sp"
         android:text="당빵메뉴" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="#2196F3"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="테스트메뉴" />
-
-    </LinearLayout>
 
 </LinearLayout>

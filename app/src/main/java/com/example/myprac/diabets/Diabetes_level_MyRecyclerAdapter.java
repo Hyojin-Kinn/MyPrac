@@ -17,16 +17,18 @@ public class Diabetes_level_MyRecyclerAdapter extends RecyclerView.Adapter<Diabe
 
     public interface Diabetes_level_MyRecyclerViewClickListener {
         void onItemClicked(int position);
+
         void onItemLongClicked(int position);
     }
 
     private Diabetes_level_MyRecyclerViewClickListener mListener;
 
-    public void setOnClickListener(Diabetes_level_MyRecyclerViewClickListener listener){
+    public void setOnClickListener(Diabetes_level_MyRecyclerViewClickListener listener) {
         this.mListener = listener;
     }
 
     private ArrayList<Diabetes_level_ItemData> itemData;
+
     public Diabetes_level_MyRecyclerAdapter(ArrayList<Diabetes_level_ItemData> itemData) {
         this.itemData = itemData;
     }
@@ -48,22 +50,20 @@ public class Diabetes_level_MyRecyclerAdapter extends RecyclerView.Adapter<Diabe
         holder.bef_n.setText(item.getBef_n());
         holder.aft_n.setText(item.getAft_n());
 
-        if (mListener != null) {
-            final int pos = position;
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onItemClicked(pos);
-                }
-            });
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mListener.onItemLongClicked(holder.getAdapterPosition());
-                    return true;
-                }
-            });
-        }
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //클릭 시 수행할 내용
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+           @Override
+           public boolean onLongClick(View v){
+               remove(holder.getAbsoluteAdapterPosition());
+               return true;
+           }
+        });
     }
 
     @Override
@@ -74,6 +74,7 @@ public class Diabetes_level_MyRecyclerAdapter extends RecyclerView.Adapter<Diabe
     // RecyclerView의 ViewHolder 만들기
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView time, bef_n, aft_n;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.dli_txt_time);
@@ -81,11 +82,10 @@ public class Diabetes_level_MyRecyclerAdapter extends RecyclerView.Adapter<Diabe
             aft_n = itemView.findViewById(R.id.dli_txt_after_num);
         }
     }
-
     public void remove (int position){
         try {
             itemData.remove(position);
-            notifyDataSetChanged();;
+            notifyDataSetChanged();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }

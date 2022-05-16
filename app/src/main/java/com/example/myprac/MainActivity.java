@@ -2,7 +2,11 @@ package com.example.myprac;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,20 +23,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.example.myprac.databinding.ActivityMainBinding;
 import com.example.myprac.navigation.DiabetesFrag;
 import com.example.myprac.navigation.GalleryFrag;
 import com.example.myprac.navigation.HomeFrag;
 import com.example.myprac.navigation.SearchFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+    DrawerLayout drawerLayout;
+    NavigationView navigationview;
     private BottomNavigationView bottomNavigationView;
     private FragmentManager fm;
     private FragmentTransaction ft;
@@ -43,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
     private GalleryAdapter galleryAdapter;
 
-    //search기능 추가
-    private ActivityMainBinding binding;
 
     private static final String TAG = "GalleryFrag";
     ArrayList<Uri> uriList = new ArrayList<>();
@@ -52,10 +58,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater()); //search
-        setContentView(binding.getRoot());
+        //툴바
+        toolbar = (Toolbar)findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //왼쪽 상단 버튼 생성
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24); //왼쪽 상단 버튼 이미지
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        navigationview = (NavigationView)findViewById(R.id.left_navi);
+
+        navigationview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+                int id = item.getItemId();
+                String title = item.getTitle().toString();
+
+                if(id == R.id.nav_menu_1){
+                    //menu1을 눌렀을때 실행
+                }
+                else if(id == R.id.nav_menu_2){
+                    //menu2을 눌렀을때 실행
+                }
+                else if(id == R.id.nav_menu_3){
+                    //menu3을 눌렀을때 실행
+                }
+                return true;
+            }
+        });
+
+        //바텀네비
         bottomNavigationView = findViewById(R.id.bottom_navi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -82,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         });
         homeFrag = new HomeFrag();
         galleryFrag = new GalleryFrag();
+        diabetesFrag = new DiabetesFrag();
         setFrag(0); //초기 화면 지정
 
         /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -114,6 +153,29 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case android.R.id.home:{ //왼쪽 상단 버튼 눌렀을 때 실행
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+            case R.id.tool_search: //오른쪽 상단 버튼 눌렀을 때 실행
+                Toast.makeText(getApplicationContext(), "검색 버튼 클릭",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.tool_more:
+                Toast.makeText(getApplicationContext(), "설정 버튼 클릭",Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void GalleryAdd(){
