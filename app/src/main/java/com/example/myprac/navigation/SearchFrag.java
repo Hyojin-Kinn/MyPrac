@@ -9,194 +9,73 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import com.example.myprac.R;
 import com.example.myprac.SearchAdapter;
 import com.example.myprac.SearchData;
 import com.example.myprac.SearchViewModel;
 import com.example.myprac.databinding.ActivityMainBinding;
 import com.example.myprac.databinding.SearchfragBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class SearchFrag extends Fragment {
 
-    private SearchfragBinding binding;
     private ArrayList<SearchData> recipe_menu;
     private ArrayList<SearchData> search_menu;
 
-    private com.example.myprac.SearchAdapter SearchAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private SearchData SearchData;
+
+    private View view;
+    private RecyclerView recyclerView;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private SearchAdapter searchAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SearchViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(SearchViewModel.class);
-
-        binding = SearchfragBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-
-        return root;
-    }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        //id 부여 이것들 나중에 뷰 바인딩해서 없애야 하는 건가?
-        //recyclerView = (RecyclerView)findViewById(R.id.recipe);
+        view = inflater.inflate(R.layout.searchfrag, container, false);
+        recyclerView = view.findViewById(R.id.recipe);
+        recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
-        binding.recipe.setLayoutManager(linearLayoutManager);
-        /*recyclerView = (RecyclerView)findViewById(R.id.recipe);
-        //array_recent = (TextView)findViewById(R.id.array_recent_button);
-        //array_recommend = (TextView)findViewById(R.id.array_recommend_button);
-        //array_comment = (TextView)findViewById(R.id.array_comment_button);
-        //search_button = (ImageButton) findViewById(R.id.search_button);
-        //tableLayout = (TableLayout)findViewById(R.id.invisible);
-        //search_bar = (EditText)findViewById(R.id.search_bar);
-        //cake = (ImageView)findViewById(R.id.cake);
-        //snack = (ImageView)findViewById(R.id.snack);
-        //toast = (ImageView)findViewById(R.id.toast);
-        //baguette = (ImageView)findViewById(R.id.baguette);*/
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         recipe_menu = new ArrayList<>();
         search_menu = new ArrayList<>();
 
-
-
-
-
-        //임시로 데이터 넣기 -> 음식 페이지에서 데이터 받아 와야 한다.
-        SearchData = new SearchData("케이크","easy recipe1","샘플","1","2","2021-12-15","cake");
-        recipe_menu.add(SearchData);
-
-
-        SearchData = new SearchData("쿠키","easy recipe2","샘플","2","1","2020-12-15","cake");
-        recipe_menu.add(SearchData);
-
-
-        SearchData = new SearchData("토스트","hard recipe2","샘플","3","1","2020-12-15","toast");
-        recipe_menu.add(SearchData);
-
-
-        SearchData = new SearchData("바게트","very hard recipe3","샘플","2","3","2019-12-15","snack");
-        recipe_menu.add(SearchData);
-
-
-        SearchAdapter = new SearchAdapter(recipe_menu);
-
-        binding.recipe.setAdapter(SearchAdapter);
-
-        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+        database = FirebaseDatabase.getInstance(); //데이터베이스 연동
+        databaseReference = database.getReference("Recipe"); //DB 테이블 연결
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                String str = binding.searchBar.getText().toString();
-                searchFilter(str); //검색 필터를 사용해서 버튼을 누를 경우 제목에 내용이 포함되어 있을 경우 나옴
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //데이터베이스를 받아오는 곳
+                recipe_menu.clear(); //기존 배열이 남아있지 않게 초기화
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    SearchData searchData = snapshot.getValue(SearchData.class);
+                    recipe_menu.add(searchData);
+                }
+                searchAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //에러가 발생할 시 실행
             }
         });
+        SearchData searchData1 = new SearchData("https://firebasestorage.googleapis.com/v0/b/myprac-27e0d.appspot.com/o/bread-399286_1920.jpg?alt=media&token=a8a7f850-980b-493d-a8c2-327d1a94fb33",
+                "레시피2","레시피2번입니다","2022-05-05","cake");
+        recipe_menu.add(searchData1);
+        searchAdapter = new SearchAdapter(recipe_menu, getContext());
+        recyclerView.setAdapter(searchAdapter);
 
-        binding.cake.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //tableLayout.setVisibility(View.GONE);
-                kindSearch("cake");
-
-
-            }
-        });
-        binding.snack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //tableLayout.setVisibility(View.GONE);
-                kindSearch("snack");
-
-
-            }
-        });
-        binding.toast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //tableLayout.setVisibility(View.GONE);
-                kindSearch("toast");
-
-
-            }
-        });
-        binding.baguette.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //tableLayout.setVisibility(View.GONE);
-                kindSearch("baguette");
-
-
-            }
-        });
-
-
-
-        //Button btn_add1 = (Button)findViewById(R.id.btn_add);
-        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //SearchData = new SearchData(R.drawable.ic_launcher_background,"쉬운 요리1","샘플","5","5","2019-12-15","스낵");
-                //recipe_menu.add(SearchData);
-                //SearchAdapter.notifyDataSetChanged();//새로고침
-            }
-        });
-        binding.arrayRecentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SearchAdapter.Array_recent();
-                SearchAdapter.notifyDataSetChanged();
-
-
-            }
-        });
-        binding.arrayRecommendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SearchAdapter.Array_recommend();
-                SearchAdapter.notifyDataSetChanged();
-
-            }
-        });
-
-        binding.arrayCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SearchAdapter.Array_comment();
-                SearchAdapter.notifyDataSetChanged();
-
-            }
-        });
-
+        return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    public void searchFilter(String str){
-        search_menu.clear();
-
-        for(SearchData m : recipe_menu) {
-            if(m.getRecipe_title().contains(str)){
-                search_menu.add(m);
-            }
-        }
-        SearchAdapter.filterList(search_menu);
-    }
-    public void kindSearch(String str){
-        search_menu.clear();
-        for(SearchData m : recipe_menu){
-            if(m.getKind().contains(str)){
-                search_menu.add(m);
-            }
-        }
-        SearchAdapter.filterList(search_menu);
-    }
 }

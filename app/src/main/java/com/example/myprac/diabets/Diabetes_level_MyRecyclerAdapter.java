@@ -15,18 +15,6 @@ import java.util.ArrayList;
 // Adapter는 RecyclerView.Adapter를 상속받아 구현하고, ViewHolder는 RecyclerView.ViewHolder를 상속받아 구현
 public class Diabetes_level_MyRecyclerAdapter extends RecyclerView.Adapter<Diabetes_level_MyRecyclerAdapter.ViewHolder> {
 
-    public interface Diabetes_level_MyRecyclerViewClickListener {
-        void onItemClicked(int position);
-
-        void onItemLongClicked(int position);
-    }
-
-    private Diabetes_level_MyRecyclerViewClickListener mListener;
-
-    public void setOnClickListener(Diabetes_level_MyRecyclerViewClickListener listener) {
-        this.mListener = listener;
-    }
-
     private ArrayList<Diabetes_level_ItemData> itemData;
 
     public Diabetes_level_MyRecyclerAdapter(ArrayList<Diabetes_level_ItemData> itemData) {

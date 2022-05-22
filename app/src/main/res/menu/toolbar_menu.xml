@@ -5,10 +5,11 @@
         android:id="@+id/tool_search"
         android:title="검색"
         android:icon="@drawable/ic_baseline_search_24"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
     <item
         android:id="@+id/tool_more"
         android:title="설정"
         android:icon="@drawable/ic_baseline_more_vert_24"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.ClipData;
 import android.content.Intent;
@@ -27,14 +29,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.myprac.home.BannerAdapter;
 import com.example.myprac.navigation.DiabetesFrag;
 import com.example.myprac.navigation.GalleryFrag;
 import com.example.myprac.navigation.HomeFrag;
 import com.example.myprac.navigation.SearchFrag;
+import com.example.myprac.recipe.RecipeFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+
+import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
     private GalleryFrag galleryFrag;
     private SearchFrag searchFrag;
     private DiabetesFrag diabetesFrag;
+    private RecipeFrag recipeFrag;
 
     private GalleryAdapter galleryAdapter;
-
 
     private static final String TAG = "GalleryFrag";
     ArrayList<Uri> uriList = new ArrayList<>();
@@ -103,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         setFrag(0);
                         break;
                     case R.id.action_search:
-                        setFrag(0); //누를 시 어플 종료되어서 임시조치
+                        setFrag(1);
                         break;
                     case R.id.action_manage:
                         setFrag(2);
@@ -121,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         homeFrag = new HomeFrag();
         galleryFrag = new GalleryFrag();
         diabetesFrag = new DiabetesFrag();
+        searchFrag = new SearchFrag();
+        recipeFrag = new RecipeFrag();
         setFrag(0); //초기 화면 지정
 
         /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -151,6 +160,10 @@ public class MainActivity extends AppCompatActivity {
                 ft.replace(R.id.main_content, galleryFrag);
                 ft.commit();
                 break;
+            case 5:
+                ft.replace(R.id.main_content, recipeFrag);
+                ft.commit();
+                break;
         }
 
     }
@@ -158,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        SearchView searchView = (SearchView)menu.findItem(R.id.tool_search).getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setQueryHint("검색어를 입력하세요");
         return true;
     }
 
