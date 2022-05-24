@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "GalleryFrag";
     ArrayList<Uri> uriList = new ArrayList<>();
 
+    ArrayList<SearchData> recipeList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         galleryFrag = new GalleryFrag();
         diabetesFrag = new DiabetesFrag();
         searchFrag = new SearchFrag();
-        recipeFrag = new RecipeFrag();
         setFrag(0); //초기 화면 지정
 
         /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.bottomNavi, navController);*/
     }
 
-    private void setFrag(int n) { //화면 교체가 일어나는 위치
+    public void setFrag(int n) { //화면 교체가 일어나는 위치
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         switch(n) {
@@ -200,6 +201,13 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 2222);
+    }
+
+    public void setRecipeList(ArrayList<SearchData> recipeList) {
+        this.recipeList = recipeList;
+    }
+    public void setRecipeFrag(int position) {
+        recipeFrag = new RecipeFrag(recipeList, position);
     }
 
     @Override

@@ -22,11 +22,11 @@
         android:layout_height="100dp"
         android:scrollbars="vertical"
         android:text="레시피 설명"/>
+    <View style="@style/Divider"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
         <LinearLayout
             android:id="@+id/recipe_ingred"
             android:layout_weight="1"
@@ -54,6 +54,7 @@
                 android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
+    <View style="@style/Divider"/>
     <FrameLayout
         android:id="@+id/recipe_content"
         android:layout_width="match_parent"

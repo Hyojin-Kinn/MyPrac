@@ -4,18 +4,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <FrameLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_gravity="center">
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/home_banner"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/home_banner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp" />
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/banner_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom" />
+    </FrameLayout>
+    <View style="@style/Divider"/>
+    <TextView
+        android:layout_margin="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="당뇨 생활 팁"
+        android:textSize="15sp"/>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp" />
-    <me.relex.circleindicator.CircleIndicator3
-        android:id="@+id/banner_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom" />
+        android:layout_height="50dp">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/home_banner_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
     </FrameLayout>
 </LinearLayout>

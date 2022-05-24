@@ -53,7 +53,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                ((MainActivity)context).setRecipeFrag(holder.getAbsoluteAdapterPosition());
+                ((MainActivity)context).setFrag(5);
             }
         });
 

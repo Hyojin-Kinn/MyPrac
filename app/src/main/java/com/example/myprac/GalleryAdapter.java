@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
-    private ArrayList<Uri> gData = null;
-    private Context gContext = null;
+    private ArrayList<Uri> gData;
+    private Context gContext;
 
     public GalleryAdapter(ArrayList<Uri> arrayList, Context context) {
         this.gData = arrayList;
