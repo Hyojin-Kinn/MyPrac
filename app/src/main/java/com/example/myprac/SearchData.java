@@ -12,8 +12,11 @@ public class SearchData {
     private String recipe_title;
     private String recipe_description;
     private String recipe_upload_date;
-    /*private ArrayList<String> recipe_ingredient;
-    private ArrayList<StepData> recipe_steps;*/
+    private String recipe_ingre_string;
+    private String recipe_step_string;
+
+
+    public SearchData(){}
 
     public int getRecipe_number() { return recipe_number; }
     public void setRecipe_number(int recipe_number) { this.recipe_number = recipe_number; }
@@ -72,13 +75,13 @@ public class SearchData {
         this.recipe_upload_date = recipe_upload_date;
     }
 
-    /*public ArrayList<String> getRecipe_ingredient() { return recipe_ingredient; }
-    public void setRecipe_ingredient(ArrayList<String> recipe_ingredient) {
-        this.recipe_ingredient = recipe_ingredient;
+    public String getRecipe_ingre_string() { return recipe_ingre_string; }
+    public void setRecipe_ingre_string(String recipe_ingre_string) {
+        this.recipe_ingre_string = recipe_ingre_string;
     }
 
-    public ArrayList<StepData> getRecipe_steps() { return recipe_steps; }
-    public void setRecipe_steps(ArrayList<StepData> recipe_steps) {
-        this.recipe_steps = recipe_steps;
-    }*/
+    public String getRecipe_step_string() { return recipe_step_string; }
+    public void setRecipe_step_string(String recipe_step_string) {
+        this.recipe_step_string = recipe_step_string;
+    }
 }

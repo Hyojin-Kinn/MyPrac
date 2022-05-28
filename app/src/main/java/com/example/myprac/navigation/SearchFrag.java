@@ -33,8 +33,6 @@ public class SearchFrag extends Fragment {
     private ArrayList<SearchData> recipe_menu;
     private ArrayList<SearchData> search_menu;
 
-    private ArrayList<String> recipe_ingredients;
-    private ArrayList<StepData> recipe_steps;
 
     private LinearLayoutManager linearLayoutManager;
 
@@ -55,7 +53,7 @@ public class SearchFrag extends Fragment {
         recipe_menu = new ArrayList<>();
         search_menu = new ArrayList<>();
 
-        /*database = FirebaseDatabase.getInstance(); //데이터베이스 연동
+        database = FirebaseDatabase.getInstance(); //데이터베이스 연동
         databaseReference = database.getReference("Recipe"); //DB 테이블 연결
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -73,12 +71,7 @@ public class SearchFrag extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
                 //에러가 발생할 시 실행
             }
-        });*/
-
-        //데이터 임시 입력
-        SearchData searchData1 = new SearchData("https://firebasestorage.googleapis.com/v0/b/myprac-27e0d.appspot.com/o/bread-399286_1920.jpg?alt=media&token=a8a7f850-980b-493d-a8c2-327d1a94fb33",
-                "레시피2","레시피2번입니다","2022-05-05","cake");
-        recipe_menu.add(searchData1);
+        });
 
 
         searchAdapter = new SearchAdapter(recipe_menu, getContext());
