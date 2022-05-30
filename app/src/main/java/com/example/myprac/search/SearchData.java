@@ -1,4 +1,4 @@
-package com.example.myprac;
+package com.example.myprac.search;
 
 import com.example.myprac.recipe.StepData;
 
@@ -9,7 +9,7 @@ public class SearchData {
     private int recipe_number;
     private String kind;
     private String recipe_Image;
-    private String recipe_title;
+    public String recipe_title;
     private String recipe_description;
     private String recipe_upload_date;
     private String recipe_ingre_string;

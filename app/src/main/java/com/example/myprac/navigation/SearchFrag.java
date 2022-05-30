@@ -1,26 +1,25 @@
 package com.example.myprac.navigation;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.example.myprac.MainActivity;
 import com.example.myprac.R;
-import com.example.myprac.SearchAdapter;
-import com.example.myprac.SearchData;
-import com.example.myprac.SearchViewModel;
-import com.example.myprac.databinding.ActivityMainBinding;
-import com.example.myprac.databinding.SearchfragBinding;
-import com.example.myprac.recipe.StepData;
+import com.example.myprac.search.SearchAdapter;
+import com.example.myprac.search.SearchData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +40,7 @@ public class SearchFrag extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private SearchAdapter searchAdapter;
+    private EditText searchBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,9 +49,40 @@ public class SearchFrag extends Fragment {
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        searchBar = view.findViewById(R.id.search_bar);
 
         recipe_menu = new ArrayList<>();
         search_menu = new ArrayList<>();
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = searchBar.getText().toString();
+                search_menu.clear();
+
+                if(searchText.equals("")){
+                    searchAdapter.filterList(recipe_menu);
+                }
+                else {
+                    for(int i = 0;i<recipe_menu.size();i++) {
+                        if(recipe_menu.get(i).recipe_title.toLowerCase().contains(searchText.toLowerCase())) {
+                            search_menu.add(recipe_menu.get(i));
+                        }
+                        searchAdapter.filterList(search_menu);
+                    }
+                }
+            }
+        });
 
         database = FirebaseDatabase.getInstance(); //데이터베이스 연동
         databaseReference = database.getReference("Recipe"); //DB 테이블 연결

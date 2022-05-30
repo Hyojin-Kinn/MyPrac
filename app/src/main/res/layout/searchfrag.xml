@@ -45,33 +45,33 @@
             <TableRow android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/bread"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:src="@drawable/bread" />
+
+                <ImageView
                     android:id="@+id/cake"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:src="@drawable/ic_baseline_cake_24" />
-
-                <ImageView
-                    android:id="@+id/snack"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:src="@drawable/ic_baseline_cake_24" />
+                    android:src="@drawable/cake" />
 
 
                 <ImageView
-                    android:id="@+id/toast"
+                    android:id="@+id/deli"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:src="@drawable/ic_baseline_cake_24" />
+                    android:src="@drawable/deli" />
 
                 <ImageView
-                    android:id="@+id/baguette"
+                    android:id="@+id/dessert"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:src="@drawable/ic_baseline_cake_24" />
+                    android:src="@drawable/dessert" />
 
 
             </TableRow>
@@ -79,36 +79,36 @@
             <TableRow android:gravity="center">
 
                 <TextView
-                    android:id="@+id/cake_title"
+                    android:id="@+id/bread_title"
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:gravity="center"
-                    android:text="케이크"
-                    android:textSize="20dp" />
+                    android:text="빵"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/snack_title"
+                    android:id="@+id/cake_title"
                     android:layout_width="90dp"
                     android:layout_height="30dp"
                     android:gravity="center"
-                    android:text="쿠키/푸딩"
-                    android:textSize="20dp" />
+                    android:text="케이크"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/toast_title"
+                    android:id="@+id/deli_title"
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:gravity="center"
-                    android:text="식빵"
-                    android:textSize="20dp" />
+                    android:text="샌드위치"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/baguette_title"
+                    android:id="@+id/dessert_title"
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:gravity="center"
-                    android:text="바게트"
-                    android:textSize="20dp" />
+                    android:text="디저트"
+                    android:textSize="15sp" />
 
 
             </TableRow>

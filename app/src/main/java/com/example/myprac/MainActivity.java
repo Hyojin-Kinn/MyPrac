@@ -2,22 +2,13 @@ package com.example.myprac;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.ClipData;
 import android.content.Intent;
@@ -26,22 +17,28 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.myprac.home.BannerAdapter;
+import com.example.myprac.gallery.GalleryAdapter;
+import com.example.myprac.gallery.GalleryAddFrag;
+import com.example.myprac.gallery.GalleryData;
 import com.example.myprac.navigation.DiabetesFrag;
 import com.example.myprac.navigation.GalleryFrag;
 import com.example.myprac.navigation.HomeFrag;
 import com.example.myprac.navigation.SearchFrag;
 import com.example.myprac.recipe.RecipeFrag;
+import com.example.myprac.search.SearchData;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-
-import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,13 +53,11 @@ public class MainActivity extends AppCompatActivity {
     private SearchFrag searchFrag;
     private DiabetesFrag diabetesFrag;
     private RecipeFrag recipeFrag;
-
-    private GalleryAdapter galleryAdapter;
-
-    private static final String TAG = "GalleryFrag";
-    ArrayList<Uri> uriList = new ArrayList<>();
+    private GalleryAddFrag galleryAddFrag;
 
     ArrayList<SearchData> recipeList = new ArrayList<>();
+
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,11 +122,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        homeFrag = new HomeFrag();
+        /*homeFrag = new HomeFrag();
         galleryFrag = new GalleryFrag();
         diabetesFrag = new DiabetesFrag();
         searchFrag = new SearchFrag();
-        setFrag(0); //초기 화면 지정
+        galleryAddFrag = new GalleryAddFrag();
+
+        setFrag(0); //초기 화면 지정*/
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        homeFrag = new HomeFrag();
+        fragmentManager.beginTransaction().replace(R.id.main_content, homeFrag).commit();
 
         /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.action_home, R.id.action_search,R.id.action_manage,R.id.action_gallery, R.id.action_more)
@@ -142,28 +142,70 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFrag(int n) { //화면 교체가 일어나는 위치
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        //ft = fm.beginTransaction();
         switch(n) {
             case 0:
-                ft.replace(R.id.main_content, homeFrag);
-                ft.commit();
+                if(homeFrag == null) {
+                    homeFrag = new HomeFrag();
+                    fragmentManager.beginTransaction().add(R.id.main_content, homeFrag).commit();
+                }
+                if(homeFrag != null) { fragmentManager.beginTransaction().show(homeFrag).commit(); }
+                if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
+                if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
+                if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
+                //ft.replace(R.id.main_content, homeFrag);
+                //ft.commit();
                 break;
             case 1:
-                ft.replace(R.id.main_content, searchFrag);
-                ft.commit();
+                if(searchFrag == null) {
+                    searchFrag = new SearchFrag();
+                    fragmentManager.beginTransaction().add(R.id.main_content, searchFrag).commit();
+                }
+                if(homeFrag != null) { fragmentManager.beginTransaction().hide(homeFrag).commit(); }
+                if(searchFrag != null) { fragmentManager.beginTransaction().show(searchFrag).commit(); }
+                if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
+                if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                //ft.replace(R.id.main_content, searchFrag);
+                //ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.main_content, diabetesFrag);
-                ft.commit();
+                if(diabetesFrag == null) {
+                    diabetesFrag = new DiabetesFrag();
+                    fragmentManager.beginTransaction().add(R.id.main_content, diabetesFrag).commit();
+                }
+                if(homeFrag != null) { fragmentManager.beginTransaction().hide(homeFrag).commit(); }
+                if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
+                if(diabetesFrag != null) { fragmentManager.beginTransaction().show(diabetesFrag).commit(); }
+                if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                //ft.replace(R.id.main_content, diabetesFrag);
+                //ft.commit();
                 break;
             case 3:
-                ft.replace(R.id.main_content, galleryFrag);
-                ft.commit();
+                if(galleryFrag == null) {
+                    galleryFrag = new GalleryFrag();
+                    fragmentManager.beginTransaction().add(R.id.main_content, galleryFrag).commit();
+                }
+                if(homeFrag != null) { fragmentManager.beginTransaction().hide(homeFrag).commit(); }
+                if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
+                if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
+                if(galleryFrag != null) { fragmentManager.beginTransaction().show(galleryFrag).commit(); }
+                if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 break;
             case 5:
-                ft.replace(R.id.main_content, recipeFrag);
-                ft.commit();
+                fragmentManager.beginTransaction().replace(R.id.main_content, recipeFrag).addToBackStack(null).commit();
+                break;
+            case 6:
+                if(galleryAddFrag == null) {
+                    galleryAddFrag = new GalleryAddFrag();
+                    fragmentManager.beginTransaction().add(R.id.main_content, galleryAddFrag).commit();
+                }
+                if(homeFrag != null) { fragmentManager.beginTransaction().hide(homeFrag).commit(); }
+                if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
+                if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
+                if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(galleryAddFrag != null) { fragmentManager.beginTransaction().show(galleryAddFrag).addToBackStack(null).commit(); }
                 break;
         }
 
@@ -197,10 +239,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void GalleryAdd(){
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 2222);
+        intent.setType("image/*");
+        startActivityForResult(intent,1);
     }
 
     public void setRecipeList(ArrayList<SearchData> recipeList) {
@@ -214,39 +254,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(data == null){
-            Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
-        }
-        else{
-            if(data.getClipData()==null){ //이미지를 한장 선택
-                Log.e("single choice: ", String.valueOf(data.getData()));
-                Uri imageUri = data.getData();
-                uriList.add(imageUri);
-
-                galleryAdapter = new GalleryAdapter(uriList,getApplicationContext());
-                GalleryFrag.setRecyclerView(galleryAdapter);
-            }
-            else{
-                ClipData clipData = data.getClipData();
-                Log.e("clipData", String.valueOf(clipData.getItemCount()));
-
-                if(clipData.getItemCount()>10){
-                    Toast.makeText(getApplicationContext(),"사진은 10장까지 선택 가능합니다.",Toast.LENGTH_LONG).show();
+        switch(requestCode) {
+            case 1:
+                if(resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    GalleryAddFrag.setGalleryImg(uri);
                 }
-                else{
-                    Log.e(TAG,"multiple choice");
-                    for(int i=0;i<clipData.getItemCount();i++){
-                        Uri imageUri = clipData.getItemAt(i).getUri();
-                        try{
-                            uriList.add(imageUri);
-                        } catch(Exception e){
-                            Log.e(TAG, "File select error", e);
-                        }
-                    }
-                    galleryAdapter = new GalleryAdapter(uriList,getApplicationContext());
-                    GalleryFrag.setRecyclerView(galleryAdapter);
-                }
-            }
+                break;
         }
     }
 }

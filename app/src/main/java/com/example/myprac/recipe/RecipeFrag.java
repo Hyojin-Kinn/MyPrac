@@ -15,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myprac.R;
-import com.example.myprac.SearchData;
+import com.example.myprac.search.SearchData;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RecipeFrag extends Fragment {

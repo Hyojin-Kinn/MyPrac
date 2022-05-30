@@ -1,4 +1,4 @@
-package com.example.myprac;
+package com.example.myprac.search;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
