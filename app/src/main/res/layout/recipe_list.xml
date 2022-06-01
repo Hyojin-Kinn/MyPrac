@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginTop="5dp"
     tools:ignore="MissingDefaultResource">
 
     <LinearLayout
@@ -29,7 +30,8 @@
         <LinearLayout
             android:layout_width="310dp"
             android:layout_height="100dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +45,8 @@
                     android:layout_height="match_parent"
                     android:text="레시피 이름을 적어주세요"
                     android:textSize="20sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:fontFamily="@font/ef_diary"/>
 
             </LinearLayout>
             <LinearLayout
@@ -54,7 +57,8 @@
                     android:id="@+id/recipe_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="레시피 설명을 적어주세요"/>
+                    android:text="레시피 설명을 적어주세요"
+                    android:fontFamily="@font/ef_diary"/>
 
             </LinearLayout>
             <LinearLayout
@@ -85,7 +89,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="2019-04-22"
-                        android:textSize="10dp"/>
+                        android:textSize="10dp"
+                        android:fontFamily="@font/ef_diary"/>
                 </LinearLayout>
 
             </LinearLayout>

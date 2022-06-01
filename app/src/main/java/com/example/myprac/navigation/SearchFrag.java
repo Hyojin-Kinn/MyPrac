@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,6 +43,12 @@ public class SearchFrag extends Fragment {
     private DatabaseReference databaseReference;
     private SearchAdapter searchAdapter;
     private EditText searchBar;
+    private ImageButton search_btn;
+
+    private ImageView breadImg;
+    private ImageView cakeImg;
+    private ImageView deliImg;
+    private ImageView dessertImg;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,11 +58,33 @@ public class SearchFrag extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         searchBar = view.findViewById(R.id.search_bar);
+        search_btn = view.findViewById(R.id.search_button);
 
         recipe_menu = new ArrayList<>();
         search_menu = new ArrayList<>();
 
-        searchBar.addTextChangedListener(new TextWatcher() {
+        //검색버튼 기능
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchText = searchBar.getText().toString();
+                search_menu.clear();
+
+                if(searchText.equals("")){
+                    searchAdapter.filterList(recipe_menu);
+                }
+                else {
+                    for(int i = 0;i<recipe_menu.size();i++) {
+                        if(recipe_menu.get(i).recipe_title.toLowerCase().contains(searchText.toLowerCase())) {
+                            search_menu.add(recipe_menu.get(i));
+                        }
+                        searchAdapter.filterList(search_menu);
+                    }
+                }
+            }
+        });
+
+        /*searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -80,6 +110,61 @@ public class SearchFrag extends Fragment {
                         }
                         searchAdapter.filterList(search_menu);
                     }
+                }
+            }
+        });*/
+
+        breadImg = view.findViewById(R.id.bread);
+        cakeImg = view.findViewById(R.id.cake);
+        deliImg = view.findViewById(R.id.deli);
+        dessertImg = view.findViewById(R.id.dessert);
+
+        //카테고리 선택기능
+        breadImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search_menu.clear();
+                for(int i = 0; i<recipe_menu.size(); i++) {
+                    if(recipe_menu.get(i).getKind().equals("bread")) {
+                        search_menu.add(recipe_menu.get(i));
+                    }
+                    searchAdapter.filterList(search_menu);
+                }
+            }
+        });
+        cakeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search_menu.clear();
+                for(int i = 0; i<recipe_menu.size(); i++) {
+                    if(recipe_menu.get(i).getKind().equals("cake")) {
+                        search_menu.add(recipe_menu.get(i));
+                    }
+                    searchAdapter.filterList(search_menu);
+                }
+            }
+        });
+        deliImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search_menu.clear();
+                for(int i = 0; i<recipe_menu.size(); i++) {
+                    if(recipe_menu.get(i).getKind().equals("deli")) {
+                        search_menu.add(recipe_menu.get(i));
+                    }
+                    searchAdapter.filterList(search_menu);
+                }
+            }
+        });
+        dessertImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search_menu.clear();
+                for(int i = 0; i<recipe_menu.size(); i++) {
+                    if(recipe_menu.get(i).getKind().equals("dessert")) {
+                        search_menu.add(recipe_menu.get(i));
+                    }
+                    searchAdapter.filterList(search_menu);
                 }
             }
         });

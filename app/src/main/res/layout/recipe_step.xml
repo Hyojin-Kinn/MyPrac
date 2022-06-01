@@ -11,14 +11,13 @@
         android:id="@+id/recipe_step_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
         android:text="조리과정"
+        android:layout_weight="1"
         android:textSize="15sp"/>
     <ImageView
         android:id="@+id/recipe_step_img"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:layout_weight="1"
         android:src="@drawable/ic_launcher_foreground"/>
 </LinearLayout>

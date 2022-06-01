@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:hint="검색어를 입력하세요" />
+            android:hint="검색어를 입력하세요"
+            android:fontFamily="@font/ef_diary"/>
 
         <ImageButton
             android:id="@+id/search_button"
@@ -84,7 +85,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="빵"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/ef_diary"/>
 
                 <TextView
                     android:id="@+id/cake_title"
@@ -92,7 +94,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="케이크"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/ef_diary"/>
 
                 <TextView
                     android:id="@+id/deli_title"
@@ -100,7 +103,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="샌드위치"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/ef_diary"/>
 
                 <TextView
                     android:id="@+id/dessert_title"
@@ -108,7 +112,8 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="디저트"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/ef_diary"/>
 
 
             </TableRow>
@@ -149,7 +154,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="전체 레시피"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:fontFamily="@font/ef_diary"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="150dp"
@@ -162,7 +168,8 @@
                 android:text="최신순"
                 android:textSize="15dp"
                 android:gravity="right"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:fontFamily="@font/ef_diary"/>
 
         </LinearLayout>
         <LinearLayout
@@ -176,6 +183,7 @@
                 android:textSize="15dp"
                 android:gravity="right"
                 android:layout_weight="1"
+                android:fontFamily="@font/ef_diary"
                 />
 
         </LinearLayout>
@@ -190,6 +198,7 @@
                 android:textSize="15dp"
                 android:gravity="right"
                 android:layout_weight="1"
+                android:fontFamily="@font/ef_diary"
                 />
 
         </LinearLayout>
@@ -205,23 +214,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recipe"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="5dp"
             android:scrollbarThumbVertical="@android:color/darker_gray"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="추가"/>
     </LinearLayout>
 </LinearLayout>

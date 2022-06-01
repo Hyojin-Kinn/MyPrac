@@ -35,4 +35,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical" />
     </FrameLayout>
+    <TextView
+        android:id="@+id/chart_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="글자"
+        android:textSize="15sp"/>
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bar_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 </LinearLayout>

@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.myprac.MainActivity;
 import com.example.myprac.R;
 import com.example.myprac.navigation.GalleryFrag;
@@ -76,6 +77,9 @@ public class GalleryAddFrag extends Fragment {
                 postDiabet = editText2.getText().toString();
                 GalleryData gd = new GalleryData(imageUri, preDiabet, postDiabet);
                 GalleryFrag.addGalleryList(gd);
+                editText1.setText(null);
+                editText2.setText(null);
+                galleryImg.setImageResource(R.drawable.ic_launcher_foreground);
                 MainActivity activity = (MainActivity)getActivity();
                 activity.setFrag(3);
             }

@@ -35,8 +35,8 @@ public class Diabetes_level_MyRecyclerAdapter extends RecyclerView.Adapter<Diabe
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         Diabetes_level_ItemData item = itemData.get(position);
         holder.time.setText(item.getTime());
-        holder.bef_n.setText(item.getBef_n());
-        holder.aft_n.setText(item.getAft_n());
+        holder.bef_n.setText(String.valueOf(item.getBef_n()));
+        holder.aft_n.setText(String.valueOf(item.getAft_n()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

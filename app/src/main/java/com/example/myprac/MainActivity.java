@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.myprac.diabets.Diabetes_level_ItemData;
 import com.example.myprac.gallery.GalleryAdapter;
 import com.example.myprac.gallery.GalleryAddFrag;
 import com.example.myprac.gallery.GalleryData;
@@ -55,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private RecipeFrag recipeFrag;
     private GalleryAddFrag galleryAddFrag;
 
-    ArrayList<SearchData> recipeList = new ArrayList<>();
-
-    private Uri imageUri;
+    ArrayList<SearchData> recipeList = new ArrayList<>(); //레시피 리스트
+    ArrayList<Diabetes_level_ItemData> diabetesList = new ArrayList<>(); //수치 기록 리스트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,23 +122,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        /*homeFrag = new HomeFrag();
-        galleryFrag = new GalleryFrag();
-        diabetesFrag = new DiabetesFrag();
-        searchFrag = new SearchFrag();
-        galleryAddFrag = new GalleryAddFrag();
 
         setFrag(0); //초기 화면 지정*/
         FragmentManager fragmentManager = getSupportFragmentManager();
         homeFrag = new HomeFrag();
         fragmentManager.beginTransaction().replace(R.id.main_content, homeFrag).commit();
 
-        /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.action_home, R.id.action_search,R.id.action_manage,R.id.action_gallery, R.id.action_more)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.main_content);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.bottomNavi, navController);*/
     }
 
     public void setFrag(int n) { //화면 교체가 일어나는 위치
@@ -146,14 +135,17 @@ public class MainActivity extends AppCompatActivity {
         //ft = fm.beginTransaction();
         switch(n) {
             case 0:
-                if(homeFrag == null) {
+                /*if(homeFrag == null) {
                     homeFrag = new HomeFrag();
                     fragmentManager.beginTransaction().add(R.id.main_content, homeFrag).commit();
-                }
+                }*/
+                homeFrag = new HomeFrag();
+                fragmentManager.beginTransaction().add(R.id.main_content, homeFrag).commit();
                 if(homeFrag != null) { fragmentManager.beginTransaction().show(homeFrag).commit(); }
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 //ft.replace(R.id.main_content, homeFrag);
                 //ft.commit();
@@ -167,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
                 if(searchFrag != null) { fragmentManager.beginTransaction().show(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
+                if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 //ft.replace(R.id.main_content, searchFrag);
                 //ft.commit();
                 break;
@@ -179,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().show(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
+                if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 //ft.replace(R.id.main_content, diabetesFrag);
                 //ft.commit();
                 break;
@@ -191,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().show(galleryFrag).commit(); }
+                if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 break;
             case 5:
@@ -205,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().show(galleryAddFrag).addToBackStack(null).commit(); }
                 break;
         }
@@ -248,6 +246,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setRecipeFrag(int position) {
         recipeFrag = new RecipeFrag(recipeList, position);
+    }
+
+    public void setDiabetesList(ArrayList<Diabetes_level_ItemData> diabetesList) {
+        this.diabetesList = diabetesList;
+    }
+    public ArrayList<Diabetes_level_ItemData> getDiabetesList() {
+        return diabetesList;
     }
 
     @Override

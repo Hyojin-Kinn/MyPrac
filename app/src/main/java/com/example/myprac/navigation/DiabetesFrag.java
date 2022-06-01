@@ -3,6 +3,7 @@ package com.example.myprac.navigation;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myprac.MainActivity;
 import com.example.myprac.R;
 import com.example.myprac.diabets.Diabetes_level_ItemData;
 import com.example.myprac.diabets.Diabetes_level_MyRecyclerAdapter;
@@ -68,6 +70,8 @@ public class DiabetesFrag extends Fragment {
             }
         });
 
+
+
         return view;
     }
 
@@ -95,12 +99,13 @@ public class DiabetesFrag extends Fragment {
             @Override
             public void onClick(View v) {
                 String myTime = editTime.getText().toString();
-                String myBeforeN = editBeforeN.getText().toString();
-                String myAfterN = editAfterN.getText().toString();
+                float myBeforeN = Float.parseFloat(editBeforeN.getText().toString());
+                float myAfterN = Float.parseFloat(editAfterN.getText().toString());
 
                 dataList.add(new Diabetes_level_ItemData(myTime, myBeforeN, myAfterN));
                 // Toast.makeText(getApplicationContext(), myTime, Toast.LENGTH_SHORT).show();
                 mDialog.dismiss();
+                ((MainActivity)getActivity()).setDiabetesList(dataList);
                 adapter.notifyDataSetChanged();
             }
         });
