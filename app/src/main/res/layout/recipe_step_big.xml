@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_step"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="5dp">
+
+    <TextView
+        android:id="@+id/recipe_step_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_weight="2"
+        android:text="조리과정"
+        android:textSize="20sp"
+        />
+
+    <ImageView
+        android:id="@+id/recipe_step_img"
+        android:layout_width="match_parent"
+        android:layout_height="333dp"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_foreground" /> <!--이미지 튀어나오지 않게 했다. -->
+
+</LinearLayout>

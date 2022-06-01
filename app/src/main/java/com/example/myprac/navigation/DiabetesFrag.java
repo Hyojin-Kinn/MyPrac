@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,7 +90,7 @@ public class DiabetesFrag extends Fragment {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         mDialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-        final EditText editTime = mDialog.findViewById(R.id.dli_add_time);
+        final Spinner editTime = mDialog.findViewById(R.id.dli_add_time);
         final EditText editBeforeN = mDialog.findViewById(R.id.dli_add_before_num);
         final EditText editAfterN = mDialog.findViewById(R.id.dli_add_after_num);
         Button btn_go = mDialog.findViewById(R.id.btn_go);
@@ -98,11 +100,16 @@ public class DiabetesFrag extends Fragment {
         btn_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String myTime = editTime.getText().toString();
+                Date date = new Date(System.currentTimeMillis());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String myDate = sdf.format(date);
+
+                String myTime = editTime.getSelectedItem().toString();
+
                 float myBeforeN = Float.parseFloat(editBeforeN.getText().toString());
                 float myAfterN = Float.parseFloat(editAfterN.getText().toString());
 
-                dataList.add(new Diabetes_level_ItemData(myTime, myBeforeN, myAfterN));
+                dataList.add(new Diabetes_level_ItemData(myDate, myTime, myBeforeN, myAfterN));
                 // Toast.makeText(getApplicationContext(), myTime, Toast.LENGTH_SHORT).show();
                 mDialog.dismiss();
                 ((MainActivity)getActivity()).setDiabetesList(dataList);

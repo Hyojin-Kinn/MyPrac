@@ -25,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="당뇨 생활 팁"
-        android:textSize="15sp"/>
+        android:textSize="15sp"
+        android:fontFamily="@font/ef_diary"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -35,14 +36,96 @@
             android:layout_height="match_parent"
             android:orientation="vertical" />
     </FrameLayout>
+    <View style="@style/Divider"
+        android:layout_marginTop="5dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_margin="3dp"
+            android:id="@+id/chart_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘의 혈당량"
+            android:textSize="15sp"
+            android:fontFamily="@font/ef_diary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
+        <ImageButton
+            android:id="@+id/refresh_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_baseline_refresh_24"
+            android:background="#FFE3AC"/>
+        </LinearLayout>
+    </LinearLayout>
     <TextView
-        android:id="@+id/chart_title"
+        android:id="@+id/home_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="글자"
-        android:textSize="15sp"/>
+        android:textSize="30sp"
+        android:text="yyyy/MM/dd"
+        android:fontFamily="@font/ef_diary"
+        />
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/bar_chart"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="23dp"
+        android:layout_marginRight="12dp">
+        <TextView
+            android:id="@+id/home_diabete1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:text="    "
+            android:fontFamily="@font/ef_diary"/>
+        <TextView
+            android:id="@+id/home_diabete2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="    "
+            android:textSize="10sp"
+            android:fontFamily="@font/ef_diary"/>
+        <TextView
+            android:id="@+id/home_diabete3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="    "
+            android:textSize="10sp"
+            android:fontFamily="@font/ef_diary"/>
+        <TextView
+            android:id="@+id/home_diabete4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="    "
+            android:textSize="10sp"
+            android:fontFamily="@font/ef_diary"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/home_state"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="오늘은 아직 기록하지 않았어요"
+        android:fontFamily="@font/ef_diary"/>
 </LinearLayout>

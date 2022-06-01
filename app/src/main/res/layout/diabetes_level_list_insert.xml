@@ -18,15 +18,13 @@
             android:layout_gravity="center"
             android:layout_weight="2">
 
-            <EditText
+            <Spinner
                 android:id="@+id/dli_add_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="아침"
-                android:textSize="23dp"
-                android:textStyle="bold"
                 android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:entries="@array/diabetes_spinner"/>
 
         </LinearLayout>
 

@@ -36,6 +36,10 @@ public class RecipeFrag extends Fragment {
 
     private ArrayList<StepData> recipe_steps;
 
+    private TextView small;
+    private TextView middle;
+    private TextView big;
+
     public RecipeFrag(ArrayList<SearchData> recipeList, int positionNum) {
         this.recipeList = recipeList;
         this.positionNum = positionNum;
@@ -77,6 +81,46 @@ public class RecipeFrag extends Fragment {
                 return false;
             }
         });
+
+        small = view.findViewById(R.id.Small);
+        middle = view.findViewById(R.id.Middle);
+        big = view.findViewById(R.id.Big);
+
+        /*여기 부분 추가 누를 경우 View가 바뀜*/
+        big.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StepsAdapterBig stepsAdapterBig = new StepsAdapterBig(getContext(), recipe_steps);
+                recyclerView.setAdapter(stepsAdapterBig);
+                synchronized (view) {
+                    view.notifyAll(); // mLock.wait();
+
+                }
+            }
+        });
+        middle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StepsAdapter stepsAdapter = new StepsAdapter(getContext(), recipe_steps);
+                recyclerView.setAdapter(stepsAdapter);
+                synchronized (view) {
+                    view.notifyAll(); // mLock.wait();
+
+                }
+            }
+        });
+        small.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StepsAdapterSmall stepsAdapterSmall = new StepsAdapterSmall(getContext(), recipe_steps);
+                recyclerView.setAdapter(stepsAdapterSmall);
+                synchronized (view) {
+                    view.notifyAll(); // mLock.wait();
+
+                }
+            }
+        });
+
 
         StepsAdapter stepsAdapter = new StepsAdapter(getContext(), recipe_steps);
         recyclerView.setAdapter(stepsAdapter);

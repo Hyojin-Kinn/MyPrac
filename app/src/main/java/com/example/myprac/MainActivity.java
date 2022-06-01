@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationview;
     private BottomNavigationView bottomNavigationView;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
     private HomeFrag homeFrag;
     private GalleryFrag galleryFrag;
     private SearchFrag searchFrag;
@@ -132,23 +130,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void setFrag(int n) { //화면 교체가 일어나는 위치
         FragmentManager fragmentManager = getSupportFragmentManager();
-        //ft = fm.beginTransaction();
         switch(n) {
             case 0:
-                /*if(homeFrag == null) {
+                if(homeFrag != null) {
+                    fragmentManager.beginTransaction().remove(homeFrag).commit();
                     homeFrag = new HomeFrag();
                     fragmentManager.beginTransaction().add(R.id.main_content, homeFrag).commit();
-                }*/
-                homeFrag = new HomeFrag();
-                fragmentManager.beginTransaction().add(R.id.main_content, homeFrag).commit();
-                if(homeFrag != null) { fragmentManager.beginTransaction().show(homeFrag).commit(); }
+                    fragmentManager.beginTransaction().show(homeFrag).commit();
+                }
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
                 if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
-                //ft.replace(R.id.main_content, homeFrag);
-                //ft.commit();
                 break;
             case 1:
                 if(searchFrag == null) {
@@ -161,8 +155,6 @@ public class MainActivity extends AppCompatActivity {
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
                 if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
-                //ft.replace(R.id.main_content, searchFrag);
-                //ft.commit();
                 break;
             case 2:
                 if(diabetesFrag == null) {
