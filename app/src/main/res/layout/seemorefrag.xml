@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/setting"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.723"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22">
+
+        <ImageView
+            android:id="@+id/setting_image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_settings_24" />
+
+        <TextView
+            android:id="@+id/setting_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="설정" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/customerCenter"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.723"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.443">
+
+        <ImageView
+            android:id="@+id/customerCenter_image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_call_24" />
+
+        <TextView
+            android:id="@+id/customerCenter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="고객센터" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dacdamol"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.219">
+
+        <ImageView
+            android:id="@+id/dacdamol_image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dakda" />
+
+        <TextView
+            android:id="@+id/dacdamol_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="닥다몰" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notice"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.443">
+
+        <ImageView
+            android:id="@+id/notice_image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_notifications_24" />
+
+        <TextView
+            android:id="@+id/notice_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="공지사항" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

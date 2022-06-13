@@ -23,7 +23,7 @@
                 android:layout_height="100dp"
                 android:text="이미지 추가"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/ic_launcher1"
                 android:layout_weight="2"/>
         </LinearLayout>
 

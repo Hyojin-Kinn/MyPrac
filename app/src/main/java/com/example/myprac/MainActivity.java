@@ -1,5 +1,7 @@
 package com.example.myprac;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +13,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +33,7 @@ import com.example.myprac.navigation.DiabetesFrag;
 import com.example.myprac.navigation.GalleryFrag;
 import com.example.myprac.navigation.HomeFrag;
 import com.example.myprac.navigation.SearchFrag;
+import com.example.myprac.navigation.SeeMoreFrag;
 import com.example.myprac.recipe.RecipeFrag;
 import com.example.myprac.search.SearchData;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +44,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -53,14 +62,21 @@ public class MainActivity extends AppCompatActivity {
     private DiabetesFrag diabetesFrag;
     private RecipeFrag recipeFrag;
     private GalleryAddFrag galleryAddFrag;
+    private SeeMoreFrag seeMoreFrag;
 
     ArrayList<SearchData> recipeList = new ArrayList<>(); //레시피 리스트
     ArrayList<Diabetes_level_ItemData> diabetesList = new ArrayList<>(); //수치 기록 리스트
+    ArrayList<GalleryData> galleryList = new ArrayList<>(); //갤러리 사진 리스트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        diabetesList = getDiabetesArrayPref(getApplicationContext(),
+                "diabetes");
+        galleryList = getGalleryArrayPref(getApplicationContext(),
+                "gallery");
 
         //툴바
         toolbar = (Toolbar)findViewById(R.id.my_toolbar);
@@ -114,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         setFrag(3);
                         break;
                     case R.id.action_more:
-                        setFrag(0);
+                        setFrag(4);
                         break;
                 }
                 return true;
@@ -141,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(seeMoreFrag != null) { fragmentManager.beginTransaction().hide(seeMoreFrag).commit(); }
                 if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 break;
@@ -153,18 +170,21 @@ public class MainActivity extends AppCompatActivity {
                 if(searchFrag != null) { fragmentManager.beginTransaction().show(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(seeMoreFrag != null) { fragmentManager.beginTransaction().hide(seeMoreFrag).commit(); }
                 if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 break;
             case 2:
                 if(diabetesFrag == null) {
                     diabetesFrag = new DiabetesFrag();
+                    diabetesFrag.setDataList(diabetesList);
                     fragmentManager.beginTransaction().add(R.id.main_content, diabetesFrag).commit();
                 }
                 if(homeFrag != null) { fragmentManager.beginTransaction().hide(homeFrag).commit(); }
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().show(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(seeMoreFrag != null) { fragmentManager.beginTransaction().hide(seeMoreFrag).commit(); }
                 if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 //ft.replace(R.id.main_content, diabetesFrag);
@@ -173,12 +193,27 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 if(galleryFrag == null) {
                     galleryFrag = new GalleryFrag();
+                    galleryFrag.setGdList(galleryList);
                     fragmentManager.beginTransaction().add(R.id.main_content, galleryFrag).commit();
                 }
                 if(homeFrag != null) { fragmentManager.beginTransaction().hide(homeFrag).commit(); }
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().show(galleryFrag).commit(); }
+                if(seeMoreFrag != null) { fragmentManager.beginTransaction().hide(seeMoreFrag).commit(); }
+                if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
+                if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
+                break;
+            case 4:
+                if(seeMoreFrag == null) {
+                    seeMoreFrag = new SeeMoreFrag();
+                    fragmentManager.beginTransaction().add(R.id.main_content, seeMoreFrag).commit();
+                }
+                if(homeFrag != null) { fragmentManager.beginTransaction().hide(homeFrag).commit(); }
+                if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
+                if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
+                if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(seeMoreFrag != null) { fragmentManager.beginTransaction().show(seeMoreFrag).commit(); }
                 if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().hide(galleryAddFrag).commit(); }
                 break;
@@ -194,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 if(searchFrag != null) { fragmentManager.beginTransaction().hide(searchFrag).commit(); }
                 if(diabetesFrag != null) { fragmentManager.beginTransaction().hide(diabetesFrag).commit(); }
                 if(galleryFrag != null) { fragmentManager.beginTransaction().hide(galleryFrag).commit(); }
+                if(seeMoreFrag != null) { fragmentManager.beginTransaction().hide(seeMoreFrag).commit(); }
                 if(recipeFrag != null) { fragmentManager.beginTransaction().hide(recipeFrag).commit(); }
                 if(galleryAddFrag != null) { fragmentManager.beginTransaction().show(galleryAddFrag).addToBackStack(null).commit(); }
                 break;
@@ -247,6 +283,11 @@ public class MainActivity extends AppCompatActivity {
         return diabetesList;
     }
 
+    public void setGalleryList(ArrayList<GalleryData> galleryList) {
+        this.galleryList = galleryList;
+    }
+    public ArrayList<GalleryData> getGalleryList() { return galleryList; }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -259,5 +300,103 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void setDiabetesArrayPref(Context context, String key, ArrayList<Diabetes_level_ItemData> values) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        JSONArray a = new JSONArray();
+
+        for(int i = 0; i<values.size();i++) {
+            Diabetes_level_ItemData data = values.get(i);
+            String str = data.getDate() + "," + data.getTime() + "," + data.getBef_n() + ","
+                    + data.getAft_n(); //float형 자동 String으로 형변환
+            a.put(str);
+        }
+
+        if(!values.isEmpty()) {
+            editor.putString(key, a.toString());
+        } else {
+            editor.putString(key, null);
+        }
+
+        editor.apply();
+    }
+
+    private ArrayList getDiabetesArrayPref(Context context, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = prefs.getString(key, null);
+        ArrayList urls = new ArrayList();
+
+        if(json != null) {
+            try {
+                JSONArray a = new JSONArray(json);
+
+                for(int i = 0; i<a.length(); i++) {
+                    String url = a.optString(i);
+                    String[] r = url.split(",");
+                    Diabetes_level_ItemData data = new Diabetes_level_ItemData(r[0],r[1],
+                            Float.parseFloat(r[2]),Float.parseFloat(r[3]));
+                    urls.add(data);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return urls;
+    }
+
+    private void setGalleryArrayPref(Context context, String key, ArrayList<GalleryData> values) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        JSONArray a = new JSONArray();
+
+        for(int i = 0; i<values.size();i++) {
+            GalleryData data = values.get(i);
+            String str = data.getImgUri().toString() + "," + data.getPreDiabets() +
+                    "," + data.getPostDiabets();
+            a.put(str);
+        }
+
+        if(!values.isEmpty()) {
+            editor.putString(key, a.toString());
+        } else {
+            editor.putString(key, null);
+        }
+
+        editor.apply();
+    }
+
+    private ArrayList getGalleryArrayPref(Context context, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = prefs.getString(key, null);
+        ArrayList urls = new ArrayList();
+
+        if(json != null) {
+            try {
+                JSONArray a = new JSONArray(json);
+
+                for(int i = 0; i<a.length(); i++) {
+                    String url = a.optString(i);
+                    String[] r = url.split(",");
+                    GalleryData data = new GalleryData(Uri.parse(r[0]),r[1],r[2]);
+                    urls.add(data);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return urls;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        setDiabetesArrayPref(getApplicationContext(),
+                "diabetes", diabetesList);
+        setGalleryArrayPref(getApplicationContext(),
+                "gallery", galleryList);
+        Log.d(TAG, "Put json");
     }
 }

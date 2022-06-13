@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myprac.diabets.Diabetes_level_ItemData;
 import com.example.myprac.gallery.GalleryAdapter;
 import com.example.myprac.MainActivity;
 import com.example.myprac.R;
@@ -27,7 +28,7 @@ public class GalleryFrag extends Fragment {
     private GridLayoutManager gridLayoutManager;
 
     private GalleryAdapter galleryAdapter;
-    private static ArrayList<GalleryData> gdList;
+    private static ArrayList<GalleryData> gdList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -37,8 +38,6 @@ public class GalleryFrag extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.account_recyclerview);
         gridLayoutManager = new GridLayoutManager(view.getContext(),3);
         recyclerView.setLayoutManager(gridLayoutManager);
-
-        gdList = new ArrayList<>();
 
         Button account_btn_add = (Button)view.findViewById(R.id.account_btn_add);
         account_btn_add.setOnClickListener(new View.OnClickListener(){
@@ -50,6 +49,7 @@ public class GalleryFrag extends Fragment {
         });
 
         galleryAdapter = new GalleryAdapter(gdList, getContext());
+        ((MainActivity)getActivity()).setGalleryList(gdList);
         recyclerView.setAdapter(galleryAdapter);
 
         return view;
@@ -57,5 +57,9 @@ public class GalleryFrag extends Fragment {
 
     public static void addGalleryList(GalleryData gd) {
         gdList.add(gd);
+    }
+
+    public void setGdList(ArrayList<GalleryData> dataList) {
+        this.gdList = dataList;
     }
 }

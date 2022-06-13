@@ -35,7 +35,8 @@ public class DiabetesFrag extends Fragment {
     private View view;
 
     ArrayList<Diabetes_level_ItemData> dataList = new ArrayList<>();
-    Diabetes_level_MyRecyclerAdapter adapter = new Diabetes_level_MyRecyclerAdapter(dataList);
+    Diabetes_level_MyRecyclerAdapter adapter;
+
 
     TextView tv1, tv2;
 
@@ -55,6 +56,7 @@ public class DiabetesFrag extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
+        adapter = new Diabetes_level_MyRecyclerAdapter(dataList);
         recyclerView.setAdapter(adapter);
 
         // 현재 날짜 표시
@@ -71,8 +73,6 @@ public class DiabetesFrag extends Fragment {
                 onMenuInsert(view);
             }
         });
-
-
 
         return view;
     }
@@ -127,5 +127,9 @@ public class DiabetesFrag extends Fragment {
 
         mDialog.show();
         adapter.notifyDataSetChanged();
+    }
+
+    public void setDataList(ArrayList<Diabetes_level_ItemData> dataList) {
+        this.dataList = dataList;
     }
 }

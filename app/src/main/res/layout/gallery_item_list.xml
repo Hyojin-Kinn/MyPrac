@@ -11,7 +11,7 @@
         android:scaleType="centerCrop"
         android:layout_marginVertical="5dp"
         android:layout_marginHorizontal="5dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher1"/>
     <View style="@style/Divider"/>
     <LinearLayout
         android:layout_width="match_parent"
